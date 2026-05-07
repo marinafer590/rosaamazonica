@@ -44,6 +44,9 @@ curl_close($ch);
 
 $res = json_decode($raw, true);
 
+// Debug Log
+file_put_contents('debug_pix.txt', date('Y-m-d H:i:s') . " - URL: https://zuckpay.com.br/conta/v3/pix/qrcode - CODE: $code - RAW: $raw\n", FILE_APPEND);
+
 // ── Se ainda der 401, tenta via form-urlencoded ──────────────
 if ($code === 401) {
     $payload_form = http_build_query([
