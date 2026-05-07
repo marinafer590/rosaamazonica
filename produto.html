@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rosa Candy - Coleção de produtos para cuidado íntimo, clareamento e skincare. Rosa Selvagem Brasil.">
+    <title>Rosa Candy | Rosa Selvagem Brasil</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" href="Images/logo.png" type="image/png">
+</head>
+<body>
+
+    <!-- ========== TOP BAR ========== -->
+    <div class="top-bar">
+        <div class="top-bar-track">
+            <span>Frete Grátis acima de R$100</span>
+            <span>Parcele em até 6x sem Juros</span>
+            <span>5% de desconto no PIX</span>
+            <span>Frete Grátis acima de R$100</span>
+            <span>Parcele em até 6x sem Juros</span>
+            <span>5% de desconto no PIX</span>
+            <span>Frete Grátis acima de R$100</span>
+            <span>Parcele em até 6x sem Juros</span>
+            <span>5% de desconto no PIX</span>
+            <span>Frete Grátis acima de R$100</span>
+            <span>Parcele em até 6x sem Juros</span>
+            <span>5% de desconto no PIX</span>
+        </div>
+    </div>
+
+    <!-- ========== HEADER ========== -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <div class="header-left">
+                <button class="hamburger" id="hamburger" aria-label="Abrir menu">
+                    <span></span><span></span><span></span>
+                </button>
+                <button aria-label="Pesquisar"><i class="fas fa-search"></i></button>
+            </div>
+
+            <a href="#" class="logo">
+                <img src="Images/logo.png" alt="Rosa Selvagem Brasil">
+            </a>
+
+            <nav class="nav-menu" id="navMenu">
+                <button class="menu-close" id="menuClose" aria-label="Fechar menu">&times;</button>
+                <a href="#">Todos os Produtos</a>
+                <div class="dropdown">
+                    <button class="dropdown-toggle">Por Necessidade <i class="fas fa-chevron-down" style="font-size:10px"></i></button>
+                    <div class="dropdown-menu">
+                        <a href="#">Adeus Foliculite</a>
+                        <a href="#">Cuidado Íntimo</a>
+                        <a href="#">Skincare</a>
+                        <a href="#">Body Splash</a>
+                        <a href="#">Desodorantes</a>
+                        <a href="#">Ritual de Banho</a>
+                        <a href="#">Cuidados Capilares</a>
+                    </div>
+                </div>
+                <a href="#">Lançamentos</a>
+                <a href="#">Ofertas</a>
+                <a href="#">Dia das Mães</a>
+            </nav>
+
+            <div class="header-right">
+                <a href="#" id="headerCartBtn" aria-label="Carrinho" style="position:relative">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    
+
+    <!-- ========== PRODUCT PAGE ========== -->
+    <main class="product-page-container">
+        <div class="product-breadcrumb">
+            <a href="index.html">Início</a> <i class="fas fa-chevron-right"></i> <span id="breadcrumb-title">Produto</span>
+        </div>
+        
+        <div class="product-main-grid">
+            <div class="product-image-col">
+                <img id="prod-img" src="" alt="Produto Rosa Selvagem" style="width:100%;border-radius:10px;">
+                <div class="prod-thumbnails" style="display:flex;gap:8px;margin-top:10px;">
+                    <img class="prod-thumb" src="" alt="" style="width:64px;height:64px;object-fit:cover;border-radius:6px;border:2px solid #eee;cursor:pointer;">
+                    <img class="prod-thumb" src="" alt="" style="width:64px;height:64px;object-fit:cover;border-radius:6px;border:2px solid #eee;cursor:pointer;">
+                </div>
+            </div>
+            
+            <div class="product-info-col">
+                <div class="prod-reviews">
+                    <i class="fas fa-star" style="color: #ffc107;"></i>
+                    <i class="fas fa-star" style="color: #ffc107;"></i>
+                    <i class="fas fa-star" style="color: #ffc107;"></i>
+                    <i class="fas fa-star" style="color: #ffc107;"></i>
+                    <i class="fas fa-star" style="color: #ffc107;"></i>
+                    <span style="font-size: 12px; color: #666; margin-left: 5px;">(<span id="prod-visitor-count">4</span> pessoas vendo esse produto agora)</span>
+                </div>
+                <div class="prod-stock-urgency" style="font-size:13px;color:#e53935;margin-top:4px;">
+                    <i class="fas fa-fire"></i>
+                    Restam apenas <span id="prod-stock-qty">15</span> unidades | Esgotando rápido!
+                </div>
+                
+                <h1 id="prod-title" class="prod-title">Carregando...</h1>
+                
+                <div class="prod-prices">
+                    <span id="prod-old-price" class="prod-old-price"></span>
+                    <span class="prod-discount-badge" id="prod-discount-badge" style="display:none;">-50%</span>
+                </div>
+                <div class="prod-current-price" id="prod-current-price">R$ 0,00</div>
+                <div class="prod-installment" id="prod-installment">ou até 12x de R$ 0,00</div>
+                
+                <button class="prod-payment-forms-btn"><i class="fas fa-plus"></i> formas de pagamento</button>
+                
+                <div class="prod-pix-box">
+                    <i class="fas fa-qrcode"></i>
+                    <div class="prod-pix-text">
+                        <strong id="prod-pix-price">R$ 0,00</strong> no pix <span class="pix-badge">(5% de desconto)</span>
+                        <p>Pague com PIX e economize <strong id="prod-pix-savings">R$ 0,00</strong></p>
+                    </div>
+                </div>
+                
+                <div class="prod-shipping-benefits">
+                    <div class="prod-benefit-box">
+                        <i class="fas fa-truck-fast"></i>
+                        <div>
+                            <h4>FRETE EXPRESS</h4>
+                            <p>Para sua Região. Receba mais rápido!</p>
+                        </div>
+                    </div>
+                    <div class="prod-benefit-box green-box">
+                        <i class="fas fa-gift"></i>
+                        <div>
+                            <h4>BRINDES</h4>
+                            <p>Nas compras acima de R$120 reais, ganhe <strong>Brindes Exclusivos</strong></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prod-countdown">
+                    <i class="fas fa-stopwatch"></i> Aproveite para ter brindes: <strong id="prod-countdown-timer">00:15:00</strong>
+                </div>
+                
+                <div class="prod-actions">
+                    <div class="prod-qty-selector">
+                        <button id="prod-qty-minus">-</button>
+                        <input type="number" id="prod-qty" value="1" min="1">
+                        <button id="prod-qty-plus">+</button>
+                    </div>
+                    <button class="prod-buy-btn" id="prod-buy-btn">COMPRAR AGORA</button>
+                </div>
+                <button class="prod-add-cart-btn" id="prod-add-cart" style="width:100%;margin-top:10px;padding:14px;background:#fff;border:2px solid #c2185b;color:#c2185b;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+                    <i class="fas fa-shopping-bag"></i> Adicionar ao carrinho
+                </button>
+                
+                <div class="prod-payment-methods">
+                    <div class="payment-icons-row">
+                        <i class="fab fa-cc-visa" style="color:#1434CB"></i>
+                        <i class="fab fa-cc-mastercard" style="color:#EB001B"></i>
+                        <i class="fab fa-cc-amex" style="color:#002663"></i>
+                        <i class="fab fa-cc-diners-club" style="color:#0079BE"></i>
+                        <i class="fas fa-barcode" style="color:#333"></i>
+                        <i class="fas fa-qrcode" style="color:#32BCAD"></i>
+                    </div>
+                </div>
+                
+                <div class="prod-description">
+                    <p id="prod-desc-text">Carregando...</p>
+
+                    <h4>Benefícios:</h4>
+                    <ul id="prod-benefits-list"></ul>
+
+                    <h4>Como usar:</h4>
+                    <div id="prod-uso-list"></div>
+                </div>
+                
+                <div class="prod-sticky-bar prod-sticky-btn-container">
+                    <button class="prod-sticky-add-btn" id="prod-sticky-add-cart">
+                        <i class="fas fa-shopping-bag"></i> Adicionar ao carrinho
+                    </button>
+                    <button class="prod-sticky-buy-btn" id="prod-sticky-buy-btn">
+                        COMPRAR AGORA
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="prod-related-section">
+            <h2>Você pode gostar</h2>
+            <div class="products-grid" id="related-products-grid">
+                <!-- Related products generated dynamically -->
+            </div>
+        </div>
+    </main>
+
+<!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-col">
+                <div class="logo-footer">
+                    <img src="Images/logo.png" alt="Rosa Selvagem Brasil">
+                </div>
+                <p>Cuidado íntimo com conforto e confiança. Produtos naturais para o seu bem-estar.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/rosaselvagem/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/rosaselvagem.ofc/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.tiktok.com/@rosaselvagembrasil" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.youtube.com/@rosaselvagemoficial" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Produtos</h4>
+                <a href="#">Todos os Produtos</a>
+                <a href="#">Lançamentos</a>
+                <a href="#">Adeus Foliculite</a>
+                <a href="#">Body Splash</a>
+                <a href="#">Desodorantes</a>
+            </div>
+            <div class="footer-col">
+                <h4>Submarcas</h4>
+                <a href="#">Cuidado Íntimo</a>
+                <a href="#">Cuidados Capilares</a>
+                <a href="#">Pele Hidratada</a>
+                <a href="#">Ritual de Banho</a>
+                <a href="#">Skincare</a>
+            </div>
+            <div class="footer-col">
+                <h4>Políticas</h4>
+                <a href="#">Privacidade</a>
+                <a href="#">Termos</a>
+                <a href="#">Regulamentos</a>
+                <a href="#">Troca</a>
+                <a href="#">Reembolso</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Rosa Selvagem Brasil. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <!-- ========== CART DRAWER ========== -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-drawer" id="cartDrawer">
+
+        <div class="cart-drawer-header">
+            <div class="cart-drawer-title">
+                Carrinho <span class="cart-drawer-count" id="cartDrawerCount">0</span>
+            </div>
+            <button class="cart-drawer-close" id="cartDrawerClose" aria-label="Fechar carrinho">&times;</button>
+        </div>
+
+        <!-- Barra de progresso -->
+        <div class="cart-progress-wrap">
+            <div class="cart-progress-msg" id="cartProgressMsg">
+                Falta só <strong id="cartProgressDiff">R$ 100,00</strong> pra você ganhar Frete Grátis! 🚚
+            </div>
+            <div class="cart-progress-bar">
+                <div class="cart-progress-fill" id="cartProgressFill" style="width:0%"></div>
+                <div class="cart-progress-milestone milestone-20" title="Frete Grátis">
+                    <i class="fas fa-truck"></i>
+                    <span>R$20</span>
+                </div>
+                <div class="cart-progress-milestone milestone-120" title="Caixa de Presente">
+                    <i class="fas fa-gift"></i>
+                    <span>R$120</span>
+                </div>
+            </div>
+            <!-- Brinde -->
+            <div class="cart-brinde-card locked" id="cartBrindeCard">
+                <img src="Images/presente.avif" alt="Caixa de Presente Brinde">
+                <div>
+                    <p class="cart-brinde-name">Caixa de Presente — Brinde</p>
+                    <p class="cart-brinde-sub">Grátis em compras acima de R$ 120,00</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de itens -->
+        <div class="cart-items-list" id="cartItemsList">
+            <!-- gerado por JS -->
+        </div>
+
+        <!-- Compre junto -->
+        <div class="cart-comprejunto" id="cartComprejuntoSection">
+            <p class="cart-comprejunto-title">Compre junto</p>
+            <div class="cart-comprejunto-list" id="cartComprejuntoList">
+                <!-- gerado por JS -->
+            </div>
+        </div>
+
+        <!-- Rodapé -->
+        <div class="cart-drawer-footer">
+            <div class="cart-totals">
+                <div class="cart-total-row">
+                    <span>Subtotal</span>
+                    <span id="cartSubtotal">R$ 0,00</span>
+                </div>
+                <div class="cart-total-row">
+                    <span>Frete</span>
+                    <span id="cartFrete" class="cart-frete-value">—</span>
+                </div>
+                <div class="cart-total-row cart-total-final">
+                    <span>Total</span>
+                    <span id="cartTotal">R$ 0,00</span>
+                </div>
+                <p class="cart-disclaimer">Tributos e frete calculados na finalização da compra</p>
+            </div>
+            <button class="cart-checkout-btn" id="cartCheckoutBtn">Finalizar Compra</button>
+        </div>
+    </div>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" aria-label="Voltar ao topo">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+
+    <script src="JS/main.js"></script>
+    <script src="JS/produto.js"></script>
+<script src="https://cdn.dracofy.com.br/v1/index.js"
+        data-token="pt_6b531c2e54d8f6f509184a275ad9868b"></script>
+</body>
+</html>

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido Confirmado | Rosa Selvagem Brasil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --pink:      #d6368b;
+            --pink-dark: #b82878;
+            --pink-bg:   #fdf2f8;
+            --pink-light:#fce4f3;
+            --green:     #2e7d32;
+            --black:     #1a1a1a;
+            --gray:      #666;
+            --gray-light:#f5f5f5;
+            --gray-border:#e0e0e0;
+            --radius:    10px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--pink-bg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 480px;
+            padding-bottom: 48px;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid var(--gray-border);
+            padding: 14px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header img { height: 36px; }
+
+        /* ── HERO ── */
+        .hero {
+            background: linear-gradient(160deg, #fff 0%, var(--pink-bg) 100%);
+            padding: 40px 24px 32px;
+            text-align: center;
+            border-bottom: 1px solid var(--pink-light);
+        }
+
+        .hero-check {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 24px rgba(214,54,139,.35);
+            animation: popIn .5s cubic-bezier(.34,1.56,.64,1) both;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0); opacity: 0; }
+            to   { transform: scale(1); opacity: 1; }
+        }
+
+        .hero-check svg { width: 36px; height: 36px; }
+
+        .hero-title {
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--black);
+            margin-bottom: 8px;
+            animation: fadeUp .5s .15s both;
+        }
+
+        .hero-sub {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.6;
+            animation: fadeUp .5s .25s both;
+        }
+
+        .hero-sub strong { color: var(--pink); }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── CARDS ── */
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            margin: 16px 16px 0;
+            padding: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,.06);
+            animation: fadeUp .5s .35s both;
+        }
+
+        .card-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            margin-bottom: 14px;
+        }
+
+        /* order info */
+        .order-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray-border);
+            font-size: 14px;
+        }
+
+        .order-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .order-row:first-child { padding-top: 0; }
+
+        .order-label { color: var(--gray); }
+        .order-value { font-weight: 700; color: var(--black); }
+        .order-value.pink { color: var(--pink); font-size: 16px; }
+
+        .order-badge {
+            background: #e8f5e9;
+            color: var(--green);
+            border-radius: 20px;
+            padding: 3px 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* ── TRACKER ── */
+        .tracker-card {
+            background: #fff;
+            border-radius: 16px;
+            margin: 16px 16px 0;
+            padding: 24px 20px 28px;
+            box-shadow: 0 2px 12px rgba(0,0,0,.06);
+            animation: fadeUp .5s .45s both;
+        }
+
+        .tracker-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--black);
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tracker-title span {
+            width: 6px; height: 6px;
+            background: var(--pink);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* linha de progresso */
+        .tracker-rail {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 0 8px;
+        }
+
+        .rail-line {
+            position: absolute;
+            top: 28px;
+            left: 40px;
+            right: 40px;
+            height: 5px;
+            background: var(--gray-border);
+            border-radius: 10px;
+            z-index: 0;
+        }
+
+        .rail-fill {
+            position: absolute;
+            top: 0; left: 0;
+            height: 100%;
+            width: 28%;
+            background: linear-gradient(90deg, var(--pink-dark), var(--pink));
+            border-radius: 10px;
+            transition: width 1.5s cubic-bezier(.4,0,.2,1);
+        }
+
+        /* caminhão na barra */
+        .rail-truck {
+            position: absolute;
+            top: -18px;
+            left: 22%;
+            transform: translateX(-50%);
+            transition: left 1.5s cubic-bezier(.4,0,.2,1);
+            z-index: 5;
+            filter: drop-shadow(0 3px 6px rgba(214,54,139,.3));
+            animation: truckBob 1.4s ease-in-out infinite;
+        }
+
+        @keyframes truckBob {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50%       { transform: translateX(-50%) translateY(-3px); }
+        }
+
+        /* nodes */
+        .tracker-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            z-index: 2;
+            width: 80px;
+        }
+
+        .node-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            border: 3px solid var(--gray-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .6s ease;
+        }
+
+        .node-icon.active {
+            background: var(--pink-bg);
+            border-color: var(--pink);
+            box-shadow: 0 0 0 6px rgba(214,54,139,.12);
+        }
+
+        .node-icon.done {
+            background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+            border-color: var(--pink-dark);
+        }
+
+        .node-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #aaa;
+            text-align: center;
+            line-height: 1.3;
+            transition: color .6s;
+        }
+
+        .node-label.active { color: var(--pink); }
+        .node-label.done   { color: var(--pink-dark); }
+
+        /* ── INFO PILLS ── */
+        .info-pills {
+            margin: 16px 16px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            animation: fadeUp .5s .55s both;
+        }
+
+        .info-pill {
+            background: #fff;
+            border-radius: 12px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.05);
+        }
+
+        .pill-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--pink-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 18px;
+        }
+
+        .pill-text p { font-size: 12px; color: var(--gray); margin-bottom: 2px; }
+        .pill-text strong { font-size: 14px; color: var(--black); }
+
+        /* ── CTA ── */
+        .cta-section {
+            margin: 24px 16px 0;
+            animation: fadeUp .5s .65s both;
+        }
+
+        .cta-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            padding: 17px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: inherit;
+            letter-spacing: .3px;
+            box-shadow: 0 6px 20px rgba(214,54,139,.35);
+            transition: filter .2s, transform .1s;
+        }
+
+        .cta-btn:hover  { filter: brightness(1.07); }
+        .cta-btn:active { transform: scale(.98); }
+
+        /* ── FOOTER ── */
+        .footer-msg {
+            text-align: center;
+            padding: 28px 24px 0;
+            font-size: 12px;
+            color: #bbb;
+            line-height: 1.8;
+            animation: fadeUp .5s .75s both;
+        }
+
+        .footer-msg a { color: var(--pink); text-decoration: none; }
+
+        /* confetti dots decorativos */
+        .confetti {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 100vh;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            opacity: 0;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0%   { opacity: 1; transform: translateY(-20px) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="confetti" id="confetti"></div>
+
+<div class="page">
+
+    <!-- HEADER -->
+    <div class="header">
+        <img src="Images/logo.png" alt="Rosa Selvagem">
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-check">
+            <!-- check SVG -->
+            <svg viewBox="0 0 36 36" fill="none">
+                <path d="M8 18.5L15 25.5L28 11" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <h1 class="hero-title">Pedido Confirmado! 🌹</h1>
+        <p class="hero-sub">
+            Obrigada pela sua compra, <strong id="heroNome">linda</strong>!<br>
+            Seu pedido está a caminho do nosso estoque e em breve<br>será despachado com muito carinho para você. 💕
+        </p>
+    </div>
+
+    <!-- ORDER INFO -->
+    <div class="card">
+        <p class="card-title">Detalhes do Pedido</p>
+        <div class="order-row">
+            <span class="order-label">Número do pedido</span>
+            <span class="order-value pink" id="orderNum">#000000</span>
+        </div>
+        <div class="order-row">
+            <span class="order-label">Data</span>
+            <span class="order-value" id="orderDate">—</span>
+        </div>
+        <div class="order-row">
+            <span class="order-label">Status</span>
+            <span class="order-badge">✓ Pagamento confirmado</span>
+        </div>
+        <div class="order-row">
+            <span class="order-label">Total pago</span>
+            <span class="order-value" id="orderTotal">—</span>
+        </div>
+    </div>
+
+    <!-- TRACKER -->
+    <div class="tracker-card">
+        <p class="tracker-title"><span></span> Rastreamento do Pedido</p>
+
+        <div class="tracker-rail">
+            <!-- linha -->
+            <div class="rail-line">
+                <div class="rail-fill" id="railFill"></div>
+                <!-- caminhão rosa na barra -->
+                <div class="rail-truck" id="railTruck">
+                    <svg width="52" height="32" viewBox="0 0 52 32" fill="none">
+                        <!-- carroceria -->
+                        <rect x="0" y="6" width="34" height="18" rx="3" fill="#d6368b"/>
+                        <!-- rosa na lateral -->
+                        <circle cx="17" cy="15" r="5" fill="#b82878" opacity=".4"/>
+                        <text x="17" y="18" text-anchor="middle" font-size="7" fill="#fff" font-family="serif">🌹</text>
+                        <!-- cabine -->
+                        <path d="M34 8 L34 24 L48 24 L48 14 L42 8 Z" fill="#b82878"/>
+                        <!-- parabrisa -->
+                        <path d="M36 9.5 L36 15 L46 15 L46 14 L41 9.5 Z" fill="#fce4f3" opacity=".8"/>
+                        <!-- roda 1 -->
+                        <circle cx="9"  cy="26" r="5" fill="#1a1a1a"/>
+                        <circle cx="9"  cy="26" r="2.5" fill="#444"/>
+                        <!-- roda 2 -->
+                        <circle cx="25" cy="26" r="5" fill="#1a1a1a"/>
+                        <circle cx="25" cy="26" r="2.5" fill="#444"/>
+                        <!-- roda 3 -->
+                        <circle cx="42" cy="26" r="5" fill="#1a1a1a"/>
+                        <circle cx="42" cy="26" r="2.5" fill="#444"/>
+                        <!-- linhas de movimento -->
+                        <line x1="0" y1="10" x2="-7" y2="10" stroke="#d6368b" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+                        <line x1="0" y1="15" x2="-10" y2="15" stroke="#d6368b" stroke-width="2" stroke-linecap="round" opacity=".35"/>
+                        <line x1="0" y1="20" x2="-6"  y2="20" stroke="#d6368b" stroke-width="2" stroke-linecap="round" opacity=".25"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- NODE 1: caixa sendo empacotada -->
+            <div class="tracker-node">
+                <div class="node-icon active" id="node1">
+                    <!-- box SVG -->
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+                        <!-- caixa base -->
+                        <rect x="4" y="13" width="22" height="14" rx="2" fill="#d6368b"/>
+                        <!-- lateral escura -->
+                        <path d="M4 15 L4 27 Q4 27 5 27 L4 27 Z" fill="#b82878" opacity=".3"/>
+                        <!-- tampa -->
+                        <rect x="2" y="10" width="26" height="5" rx="2" fill="#b82878"/>
+                        <!-- fita vertical -->
+                        <rect x="13.5" y="10" width="3" height="17" fill="#fff" opacity=".4"/>
+                        <!-- fita horizontal -->
+                        <rect x="2" y="11.5" width="26" height="3" fill="#fff" opacity=".4"/>
+                        <!-- laço esquerdo -->
+                        <path d="M13.5 10 Q10 6 12 5 Q14 4 14 8" fill="#fff" opacity=".5"/>
+                        <!-- laço direito -->
+                        <path d="M16.5 10 Q20 6 18 5 Q16 4 16 8" fill="#fff" opacity=".5"/>
+                        <!-- brilho -->
+                        <circle cx="22" cy="17" r="2" fill="#fff" opacity=".2"/>
+                    </svg>
+                </div>
+                <span class="node-label active">Em<br>preparação</span>
+            </div>
+
+            <!-- NODE 2: enviado (centro) -->
+            <div class="tracker-node">
+                <div class="node-icon" id="node2">
+                    <!-- mini truck icon -->
+                    <svg width="30" height="24" viewBox="0 0 30 24" fill="none">
+                        <rect x="0" y="3" width="18" height="13" rx="2" fill="#ccc"/>
+                        <path d="M18 5 L18 16 L28 16 L28 9 L23 5 Z" fill="#bbb"/>
+                        <rect x="19" y="5.5" width="7" height="5" rx="1" fill="#e0e0e0" opacity=".6"/>
+                        <circle cx="5"  cy="18" r="3.5" fill="#999"/>
+                        <circle cx="5"  cy="18" r="1.5" fill="#ccc"/>
+                        <circle cx="14" cy="18" r="3.5" fill="#999"/>
+                        <circle cx="14" cy="18" r="1.5" fill="#ccc"/>
+                        <circle cx="24" cy="18" r="3.5" fill="#999"/>
+                        <circle cx="24" cy="18" r="1.5" fill="#ccc"/>
+                    </svg>
+                </div>
+                <span class="node-label" id="label2">Enviado</span>
+            </div>
+
+            <!-- NODE 3: casinha -->
+            <div class="tracker-node">
+                <div class="node-icon" id="node3">
+                    <!-- CASINHA SVG ROSA -->
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+                        <!-- telhado -->
+                        <path d="M2 14 L15 3 L28 14" fill="#ccc" stroke="#bbb" stroke-width="1"/>
+                        <!-- chaminé -->
+                        <rect x="19" y="5" width="4" height="7" rx="1" fill="#bbb"/>
+                        <rect x="18" y="4" width="6" height="2" rx="1" fill="#aaa"/>
+                        <!-- fumaça -->
+                        <path d="M21 4 Q22 2 21 1 Q20 0 21 -1" stroke="#ddd" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+                        <!-- parede -->
+                        <rect x="5" y="13" width="20" height="17" rx="1" fill="#ddd"/>
+                        <!-- porta -->
+                        <rect x="11" y="20" width="8" height="10" rx="2" fill="#bbb"/>
+                        <circle cx="17.5" cy="25" r="1" fill="#aaa"/>
+                        <!-- janela esq -->
+                        <rect x="6"  y="16" width="5" height="5" rx="1" fill="#c5e8ff" opacity=".7"/>
+                        <line x1="8.5" y1="16" x2="8.5" y2="21" stroke="#bbb" stroke-width=".8"/>
+                        <line x1="6" y1="18.5" x2="11" y2="18.5" stroke="#bbb" stroke-width=".8"/>
+                        <!-- janela dir -->
+                        <rect x="19" y="16" width="5" height="5" rx="1" fill="#c5e8ff" opacity=".7"/>
+                        <line x1="21.5" y1="16" x2="21.5" y2="21" stroke="#bbb" stroke-width=".8"/>
+                        <line x1="19" y1="18.5" x2="24" y2="18.5" stroke="#bbb" stroke-width=".8"/>
+                    </svg>
+                </div>
+                <span class="node-label" id="label3">Entregue</span>
+            </div>
+        </div>
+
+        <p style="font-size:12px;color:#aaa;text-align:center;margin-top:32px;">
+            Acompanhe seu pedido pelo e-mail cadastrado 📧
+        </p>
+    </div>
+
+    <!-- INFO PILLS -->
+    <div class="info-pills">
+        <div class="info-pill">
+            <div class="pill-icon">📅</div>
+            <div class="pill-text">
+                <p>Prazo estimado de entrega</p>
+                <strong id="deliveryRange">5 a 12 dias úteis</strong>
+            </div>
+        </div>
+        <div class="info-pill">
+            <div class="pill-icon">📦</div>
+            <div class="pill-text">
+                <p>Prazo de postagem</p>
+                <strong>Até 5 dias úteis após confirmação</strong>
+            </div>
+        </div>
+        <div class="info-pill">
+            <div class="pill-icon">💌</div>
+            <div class="pill-text">
+                <p>Confirmação enviada para</p>
+                <strong id="pillEmail">seu e-mail</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+        <button class="cta-btn" onclick="window.location.href='index.html'">
+            Continuar comprando 🌹
+        </button>
+    </div>
+
+    <!-- RODAPÉ -->
+    <p class="footer-msg">
+        Dúvidas? Entre em contato pelo<br>
+        <a href="https://wa.me/5500000000000">WhatsApp da Rosa Selvagem</a><br><br>
+        🔒 Compra 100% segura e protegida
+    </p>
+
+</div>
+
+<script>
+    // ── Carregar dados do pedido ──────────────────────────────
+    const params    = new URLSearchParams(window.location.search);
+    const savedName = localStorage.getItem('rosaClientNome') || params.get('nome') || '';
+    const savedEmail= localStorage.getItem('rosaClientEmail')|| params.get('email')|| '';
+    const orderNum  = params.get('pedido') || localStorage.getItem('rosaOrderNum') || Math.floor(100000 + Math.random() * 900000);
+    const shipping  = params.get('frete') || localStorage.getItem('rosaShipping') || 'free';
+
+    if (savedName)  document.getElementById('heroNome').textContent  = savedName.split(' ')[0];
+    if (savedEmail) document.getElementById('pillEmail').textContent = savedEmail;
+
+    document.getElementById('orderNum').textContent = '#' + orderNum;
+
+    const now = new Date();
+    document.getElementById('orderDate').textContent =
+        now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+
+    const cart = JSON.parse(localStorage.getItem('rosaCart') || '[]');
+    const bumps = JSON.parse(localStorage.getItem('rosaBumps') || '{}');
+    const cartTotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const shippingCost = shipping === 'flash' ? 15 : shipping === 'sedex' ? 25 : 0;
+    const total = cartTotal + shippingCost;
+    if (total > 0) {
+        const pix = total * 0.95;
+        document.getElementById('orderTotal').textContent =
+            'R$ ' + pix.toFixed(2).replace('.', ',');
+    }
+
+    // prazo de entrega por método
+    const ranges = { free: '5 a 12 dias úteis', flash: '7 a 15 dias úteis', sedex: '5 a 10 dias úteis' };
+    document.getElementById('deliveryRange').textContent = ranges[shipping] || '5 a 12 dias úteis';
+
+    // ── Animação da barra de progresso ──────────────────────
+    setTimeout(() => {
+        document.getElementById('railFill').style.width  = '28%';
+        document.getElementById('railTruck').style.left  = '22%';
+    }, 400);
+
+    // ── Confetti ─────────────────────────────────────────────
+    const colors = ['#d6368b','#b82878','#fce4f3','#ff80ab','#f48fb1','#fff'];
+    const container = document.getElementById('confetti');
+
+    for (let i = 0; i < 45; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        dot.style.cssText = `
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * -10}%;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            width: ${4 + Math.random() * 7}px;
+            height: ${4 + Math.random() * 7}px;
+            border-radius: ${Math.random() > .5 ? '50%' : '2px'};
+            animation-duration: ${1.8 + Math.random() * 2.2}s;
+            animation-delay: ${Math.random() * .8}s;
+        `;
+        container.appendChild(dot);
+    }
+</script>
+<!-- Cole antes do </body> na sua landing page -->
+<script src="https://cdn.dracofy.com.br/v1/index.js"
+        data-token="pt_6b531c2e54d8f6f509184a275ad9868b"></script>
+</body>
+</html>
