@@ -2,6 +2,10 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 $client_id     = 'boazenrique16_3750276116';
 $client_secret = '596a1b423017f1605d30f9291968f61cd7f26f611979a544dc430acef6d29432';
 
