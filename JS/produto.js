@@ -291,7 +291,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const qty = parseInt(qtyInput.value) || 1;
       window.rosaAddToCart(product, qty);
     }
-    window.location.href = 'checkout.html';
+    // Redireciona para o checkout externo desse produto
+    window.location.href = product.checkoutUrl || 'index.html';
   };
 
   document.getElementById('prod-add-cart').addEventListener('click', handleAdd);
@@ -353,7 +354,8 @@ function loadRelatedProducts(currentId) {
             const id    = name.toLowerCase().replace(/\s+/g, '-').slice(0, 40);
             const img   = card.querySelector('.img-wrapper img')?.src || '';
             const price = parseFloat((card.querySelector('.price-current')?.textContent || '0').replace('R$','').replace(/\./g,'').replace(',','.').trim()) || 0;
-            if (window.rosaAddToCart) window.rosaAddToCart({ id, name, price, image: img }, 1);
+            const checkoutUrl = card.dataset.checkoutUrl || '';
+            if (window.rosaAddToCart) window.rosaAddToCart({ id, name, price, image: img, checkoutUrl }, 1);
             return;
           }
           const name      = card.querySelector('h3')?.textContent.trim() || '';
@@ -361,7 +363,8 @@ function loadRelatedProducts(currentId) {
           const img       = card.querySelector('.img-wrapper img')?.src || '';
           const price     = parseFloat((card.querySelector('.price-current')?.textContent || '0').replace('R$','').replace(/\./g,'').replace(',','.').trim()) || 0;
           const origPrice = card.querySelector('.price-original')?.textContent || '';
-          localStorage.setItem('currentRosaProduct', JSON.stringify({ id, name, price, image: img, originalPrice: origPrice }));
+          const checkoutUrl = card.dataset.checkoutUrl || '';
+          localStorage.setItem('currentRosaProduct', JSON.stringify({ id, name, price, image: img, originalPrice: origPrice, checkoutUrl }));
           window.location.href = 'produto.html';
         });
         card.style.cursor = 'pointer';

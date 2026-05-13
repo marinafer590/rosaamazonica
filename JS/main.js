@@ -204,7 +204,8 @@ function initCart() {
         const raw   = card.querySelector('.price-current')?.textContent || '0';
         const price = parseFloat(raw.replace('R$', '').replace('.', '').replace(',', '.').trim()) || 0;
         const id    = name.toLowerCase().replace(/\s+/g, '-').slice(0, 40);
-        return { id, name, price, image: img, qty: 1 };
+        const checkoutUrl = card.dataset.checkoutUrl || '';
+        return { id, name, price, image: img, qty: 1, checkoutUrl };
     }
 
     // ── cart state ────────────────────────────────────────────
@@ -288,7 +289,8 @@ function initCart() {
                 const img   = card.querySelector('.img-wrapper img')?.src || '';
                 const raw   = card.querySelector('.price-current')?.textContent || '0';
                 const price = parseFloat(raw.replace('R$', '').replace('.', '').replace(',', '.').trim()) || 0;
-                return { id, name, price, image: img };
+                const checkoutUrl = card.dataset.checkoutUrl || '';
+                return { id, name, price, image: img, checkoutUrl };
             })
             .filter(p => !cartIds.has(p.id))
             .slice(0, 4);
@@ -304,7 +306,7 @@ function initCart() {
                 <p class="cart-cj-name">${p.name}</p>
                 <p class="cart-cj-price">${fmt(p.price)}</p>
                 <button class="cart-cj-add-btn" data-cj-id="${p.id}"
-                    data-cj-name="${p.name}" data-cj-price="${p.price}" data-cj-img="${p.image}">
+                    data-cj-name="${p.name}" data-cj-price="${p.price}" data-cj-img="${p.image}" data-cj-checkout="${p.checkoutUrl}">
                     Adicionar
                 </button>
             </div>
@@ -361,7 +363,12 @@ function initCart() {
     });
 
     document.getElementById('cartCheckoutBtn')?.addEventListener('click', () => {
-        window.location.href = 'checkout.html';
+        if (cart.length > 0) {
+            // Redireciona para o link do primeiro produto adicionado
+            window.location.href = cart[0].checkoutUrl || 'index.html';
+        } else {
+            alert('Seu carrinho está vazio!');
+        }
     });
 
     // qty +/− and remove inside drawer
@@ -381,6 +388,7 @@ function initCart() {
             name:  btn.dataset.cjName,
             price: parseFloat(btn.dataset.cjPrice),
             image: btn.dataset.cjImg,
+            checkoutUrl: btn.dataset.cjCheckout,
             qty:   1,
         });
         refreshCart();
@@ -408,8 +416,9 @@ function initCart() {
             const rawPrice = card.querySelector('.price-current')?.textContent || '0';
             const price = parseFloat(rawPrice.replace('R$', '').replace('.', '').replace(',', '.').trim()) || 0;
             const originalRaw = card.querySelector('.price-original')?.textContent || '';
+            const checkoutUrl = card.dataset.checkoutUrl || '';
             
-            const productData = { id, name, price, image: img, originalPrice: originalRaw };
+            const productData = { id, name, price, image: img, originalPrice: originalRaw, checkoutUrl };
             localStorage.setItem('currentRosaProduct', JSON.stringify(productData));
             window.location.href = `produto.html?id=${id}`;
         });
@@ -493,9 +502,10 @@ function initExitPopup() {
         const name  = kitCard?.querySelector('h3')?.textContent.trim() || 'Relâmpago — Kit Autocuidado Total';
         const id    = name.toLowerCase().replace(/\s+/g, '-').slice(0, 40);
         const img   = kitCard?.querySelector('.img-wrapper img')?.src || 'Images/kit-autocuidado.webp';
-        const item  = { id, name, price: 32.38, image: img };
+        const checkoutUrl = kitCard?.dataset.checkoutUrl || 'https://checkout.exemplo.com/kit-autocuidado-relampago';
+        const item  = { id, name, price: 32.38, image: img, checkoutUrl };
         localStorage.setItem('rosaCart', JSON.stringify([{ ...item, qty: 1 }]));
-        window.location.href = 'checkout.html';
+        window.location.href = checkoutUrl;
     });
 }
 
