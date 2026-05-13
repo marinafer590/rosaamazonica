@@ -303,20 +303,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Comprar agora → adiciona ao cart e vai direto para checkout
   const handleBuy = () => {
-    const qty = parseInt(qtyInput.value) || 1;
-    
-    // Adiciona ao carrinho primeiro (para registro/pixel)
-    if (window.rosaAddToCart) {
-      window.rosaAddToCart(product, qty);
-    }
-    
-    // Pega o link direto do produto ou do localStorage como garantia
-    const finalCheckoutUrl = product.checkoutUrl || 
-                             JSON.parse(localStorage.getItem('currentRosaProduct') || '{}').checkoutUrl || 
-                             'index.html';
+    try {
+      const qty = parseInt(qtyInput.value) || 1;
+      
+      // 1. Tenta pegar o link do objeto do produto atual
+      let checkoutUrl = product.checkoutUrl;
+      
+      // 2. Se falhar, tenta pegar do armazenamento local bruto
+      if (!checkoutUrl) {
+        const rawData = localStorage.getItem('currentRosaProduct');
+        if (rawData) {
+          const parsed = JSON.parse(rawData);
+          checkoutUrl = parsed.checkoutUrl;
+        }
+      }
+      
+      // 3. Se ainda assim falhar, verifica se o item já está no carrinho e pega de lá
+      if (!checkoutUrl) {
+        const cart = JSON.parse(localStorage.getItem('rosaCart') || '[]');
+        const cartItem = cart.find(i => i.id === product.id);
+        if (cartItem) checkoutUrl = cartItem.checkoutUrl;
+      }
 
-    console.log('Redirecionando para:', finalCheckoutUrl);
-    window.location.href = finalCheckoutUrl;
+      // Adiciona ao carrinho (para trackear a intenção de compra)
+      if (window.rosaAddToCart) {
+        window.rosaAddToCart(product, qty);
+      }
+
+      // 4. Fallback final caso nada funcione
+      const finalUrl = checkoutUrl || 'index.html';
+      
+      console.log('Final Checkout Link:', finalUrl);
+      window.location.href = finalUrl;
+      
+    } catch (err) {
+      console.error('Erro no redirecionamento:', err);
+      // Fallback seguro em caso de erro crítico
+      window.location.href = 'index.html';
+    }
   };
 
   document.getElementById('prod-add-cart').addEventListener('click', handleAdd);
