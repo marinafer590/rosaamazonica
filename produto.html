@@ -8,6 +8,23 @@
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" href="Images/logo.png" type="image/png">
+
+    <!-- UTMify Scripts -->
+    <script>
+      window.pixelId = "6a04fda4e2a551f3c70eee84";
+      var a = document.createElement("script");
+      a.setAttribute("async", "");
+      a.setAttribute("defer", "");
+      a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+      document.head.appendChild(a);
+    </script>
+    <script
+      src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+      data-utmify-prevent-xcod-sck
+      data-utmify-prevent-subids
+      async
+      defer
+    ></script>
 </head>
 <body>
 
@@ -98,65 +115,72 @@
                     <i class="fas fa-star" style="color: #ffc107;"></i>
                     <span style="font-size: 12px; color: #666; margin-left: 5px;">(<span id="prod-visitor-count">4</span> pessoas vendo esse produto agora)</span>
                 </div>
-                <div class="prod-stock-urgency" style="font-size:13px;color:#e53935;margin-top:4px;">
-                    <i class="fas fa-fire"></i>
-                    Restam apenas <span id="prod-stock-qty">15</span> unidades | Esgotando rápido!
-                </div>
                 
                 <h1 id="prod-title" class="prod-title">Carregando...</h1>
                 
-                <div class="prod-prices">
-                    <span id="prod-old-price" class="prod-old-price"></span>
-                    <span class="prod-discount-badge" id="prod-discount-badge" style="display:none;">-50%</span>
+                <div class="prod-prices-wrapper">
+                    <div class="prod-prices-main">
+                        <span id="prod-old-price" class="prod-old-price"></span>
+                        <span class="prod-discount-tag" id="prod-discount-badge" style="display:none;">-50%</span>
+                    </div>
+                    <div class="prod-current-price" id="prod-current-price">R$ 0,00</div>
+                    <div class="prod-installment" id="prod-installment">ou até 6x de R$ 0,00 sem juros</div>
                 </div>
-                <div class="prod-current-price" id="prod-current-price">R$ 0,00</div>
-                <div class="prod-installment" id="prod-installment">ou até 12x de R$ 0,00</div>
-                
-                <button class="prod-payment-forms-btn"><i class="fas fa-plus"></i> formas de pagamento</button>
-                
-                <div class="prod-pix-box">
-                    <i class="fas fa-qrcode"></i>
-                    <div class="prod-pix-text">
-                        <strong id="prod-pix-price">R$ 0,00</strong> no pix <span class="pix-badge">(5% de desconto)</span>
-                        <p>Pague com PIX e economize <strong id="prod-pix-savings">R$ 0,00</strong></p>
+
+                <div class="prod-payment-info-btn-wrap">
+                    <button class="prod-payment-info-btn"><i class="fas fa-plus"></i> formas de pagamento</button>
+                </div>
+
+                <div class="prod-pix-box-minimal">
+                    <div class="pix-icon-wrap">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <div class="pix-details">
+                        <p><strong id="prod-pix-price">R$ 0,00</strong> no pix <span class="pix-badge-minimal">5% de desconto</span></p>
+                        <p class="pix-savings">Pague com pix e economize <span id="prod-pix-savings">R$ 0,00</span></p>
                     </div>
                 </div>
-                
-                <div class="prod-shipping-benefits">
-                    <div class="prod-benefit-box">
-                        <i class="fas fa-truck-fast"></i>
-                        <div>
+
+                <div class="prod-benefits-grid">
+                    <div class="prod-benefit-item">
+                        <div class="benefit-header">
+                            <i class="fas fa-truck"></i>
                             <h4>FRETE EXPRESS</h4>
-                            <p>Para sua Região. Receba mais rápido!</p>
                         </div>
+                        <p>Para sua Região. Receba mais rápido!</p>
                     </div>
-                    <div class="prod-benefit-box green-box">
-                        <i class="fas fa-gift"></i>
-                        <div>
+                    <div class="prod-benefit-item">
+                        <div class="benefit-header">
+                            <i class="fas fa-gift"></i>
                             <h4>BRINDES</h4>
-                            <p>Nas compras acima de R$120 reais, ganhe <strong>Brindes Exclusivos</strong></p>
                         </div>
+                        <p>Nas compras acima de R$120 reais, ganhe <strong>Brindes Exclusivos</strong></p>
+                    </div>
+                </div>
+
+                <div class="stock-urgency-box-official">
+                    <div class="stock-header">
+                        <i class="far fa-clock"></i>
+                        <span>Restam apenas <strong id="prod-stock-qty">45</strong> unidades</span>
+                        <span class="stock-tag">Baixo estoque!</span>
+                    </div>
+                    <div class="stock-progress">
+                        <div class="stock-progress-fill-pink" style="width: 85%;"></div>
+                    </div>
+                </div>
+
+                <div class="prod-actions-row">
+                    <div class="prod-qty-wrapper">
+                        <button id="prod-qty-minus" class="qty-btn-round">-</button>
+                        <span id="prod-qty-val" class="qty-val">1</span>
+                        <button id="prod-qty-plus" class="qty-btn-round">+</button>
+                        <input type="number" id="prod-qty" value="1" min="1" style="display:none;">
                     </div>
                 </div>
                 
-                <div class="prod-countdown">
-                    <i class="fas fa-stopwatch"></i> Aproveite para ter brindes: <strong id="prod-countdown-timer">00:15:00</strong>
-                </div>
-                
-                <div class="prod-actions">
-                    <div class="prod-qty-selector">
-                        <button id="prod-qty-minus">-</button>
-                        <input type="number" id="prod-qty" value="1" min="1">
-                        <button id="prod-qty-plus">+</button>
-                    </div>
-                    <button class="prod-buy-btn" id="prod-buy-btn">COMPRAR AGORA</button>
-                </div>
-                <button class="prod-add-cart-btn" id="prod-add-cart" style="width:100%;margin-top:10px;padding:14px;background:#fff;border:2px solid #c2185b;color:#c2185b;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
-                    <i class="fas fa-shopping-bag"></i> Adicionar ao carrinho
-                </button>
-                
-                <div class="prod-payment-methods">
-                    <div class="payment-icons-row">
+                <div class="prod-buy-now-wrap">
+                    <button class="prod-buy-btn-official" id="prod-buy-btn">COMPRAR AGORA</button>
+                    <div class="prod-payment-icons-original">
                         <i class="fab fa-cc-visa" style="color:#1434CB"></i>
                         <i class="fab fa-cc-mastercard" style="color:#EB001B"></i>
                         <i class="fab fa-cc-amex" style="color:#002663"></i>
@@ -319,7 +343,5 @@
 
     <script src="JS/main.js"></script>
     <script src="JS/produto.js"></script>
-<script src="https://cdn.dracofy.com.br/v1/index.js"
-        data-token="pt_6b531c2e54d8f6f509184a275ad9868b"></script>
 </body>
 </html>

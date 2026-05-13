@@ -181,7 +181,15 @@ function initVisitorCounter() {
 // ── Contador de estoque urgência ─────────────────────────────────────────────
 function initStockUrgency() {
   const el = document.getElementById('prod-stock-qty');
-  if (el) el.textContent = Math.floor(8 + Math.random() * 18);
+  const fill = document.querySelector('.stock-progress-fill-pink');
+  if (el) {
+    const qty = Math.floor(38 + Math.random() * 12);
+    el.textContent = qty;
+    if (fill) {
+      const percent = Math.min(95, Math.max(10, (qty / 55) * 100));
+      fill.style.width = percent + '%';
+    }
+  }
 }
 
 // ── Renderiza a página com os dados do produto ───────────────────────────────
@@ -242,7 +250,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // PIX — 5% de desconto + economia em reais
   const pixVal  = product.price * 0.95;
   const savings = product.price - pixVal;
-  document.getElementById('prod-pix-price').textContent   = fmt(pixVal);
+  const pixPriceEl = document.getElementById('prod-pix-price');
+  if (pixPriceEl) pixPriceEl.textContent = fmt(pixVal);
   const savingsEl = document.getElementById('prod-pix-savings');
   if (savingsEl) savingsEl.textContent = fmt(savings);
 
@@ -268,13 +277,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Seletor de quantidade
   const qtyInput = document.getElementById('prod-qty');
+  const qtyValDisplay = document.getElementById('prod-qty-val');
+  
+  const updateQty = (val) => {
+    qtyInput.value = val;
+    if (qtyValDisplay) qtyValDisplay.textContent = val;
+  };
+
   document.getElementById('prod-qty-minus').addEventListener('click', () => {
     let v = parseInt(qtyInput.value) || 1;
-    if (v > 1) qtyInput.value = v - 1;
+    if (v > 1) updateQty(v - 1);
   });
   document.getElementById('prod-qty-plus').addEventListener('click', () => {
     let v = parseInt(qtyInput.value) || 1;
-    qtyInput.value = v + 1;
+    updateQty(v + 1);
   });
 
   // Adicionar ao carrinho
@@ -290,9 +306,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.rosaAddToCart) {
       const qty = parseInt(qtyInput.value) || 1;
       window.rosaAddToCart(product, qty);
+      
+      // Busca o carrinho atualizado para pegar o link do primeiro item
+      const currentCart = JSON.parse(localStorage.getItem('rosaCart') || '[]');
+      if (currentCart.length > 0) {
+        window.location.href = currentCart[0].checkoutUrl || product.checkoutUrl || 'index.html';
+      } else {
+        window.location.href = product.checkoutUrl || 'index.html';
+      }
+    } else {
+      window.location.href = product.checkoutUrl || 'index.html';
     }
-    // Redireciona para o checkout externo desse produto
-    window.location.href = product.checkoutUrl || 'index.html';
   };
 
   document.getElementById('prod-add-cart').addEventListener('click', handleAdd);
@@ -305,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Sticky bar ao rolar
   const stickyBar = document.querySelector('.prod-sticky-bar');
-  const mainActions = document.querySelector('.prod-actions');
+  const mainActions = document.querySelector('.prod-actions-centered');
   if (stickyBar && mainActions) {
     window.addEventListener('scroll', () => {
       const rect = mainActions.getBoundingClientRect();

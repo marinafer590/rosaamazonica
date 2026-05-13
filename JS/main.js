@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSortProducts();
     initExitPopup();
     initCart();
+    initWelcomePopup();
 });
 
 // ========== MOBILE MENU ==========
@@ -503,9 +504,54 @@ function initExitPopup() {
         const id    = name.toLowerCase().replace(/\s+/g, '-').slice(0, 40);
         const img   = kitCard?.querySelector('.img-wrapper img')?.src || 'Images/kit-autocuidado.webp';
         const checkoutUrl = kitCard?.dataset.checkoutUrl || 'https://checkout.exemplo.com/kit-autocuidado-relampago';
-        const item  = { id, name, price: 32.38, image: img, checkoutUrl };
+        const item  = { id, name, price: 139.96, image: img, checkoutUrl };
         localStorage.setItem('rosaCart', JSON.stringify([{ ...item, qty: 1 }]));
         window.location.href = checkoutUrl;
     });
 }
 
+
+// ========== WELCOME POPUP ==========
+function initWelcomePopup() {
+    const welcomePopup = document.getElementById('welcomePopup');
+    const closeWelcomeBtn = document.getElementById('closeWelcomePopup');
+    const welcomeVerProdutosBtn = document.getElementById('welcomeVerProdutos');
+
+    // Verifica se já foi exibido nesta sessão
+    if (sessionStorage.getItem('welcomePopupShown')) return;
+
+    if (welcomePopup) {
+        // Exibe após 1 segundo
+        setTimeout(() => {
+            welcomePopup.style.display = 'flex';
+            setTimeout(() => {
+                welcomePopup.classList.add('show');
+                // Marca como exibido
+                sessionStorage.setItem('welcomePopupShown', 'true');
+            }, 10);
+        }, 1000);
+
+        const closePopup = () => {
+            welcomePopup.classList.remove('show');
+            setTimeout(() => {
+                welcomePopup.style.display = 'none';
+            }, 400);
+        };
+
+        if (closeWelcomeBtn) closeWelcomeBtn.addEventListener('click', closePopup);
+        
+        if (welcomeVerProdutosBtn) {
+            welcomeVerProdutosBtn.addEventListener('click', () => {
+                closePopup();
+                // Rola suavemente até a seção de produtos
+                const grid = document.querySelector('.products-section');
+                if (grid) grid.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+
+        // Fecha ao clicar fora do conteúdo
+        welcomePopup.addEventListener('click', (e) => {
+            if (e.target === welcomePopup) closePopup();
+        });
+    }
+}
