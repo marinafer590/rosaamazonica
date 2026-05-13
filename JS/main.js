@@ -405,6 +405,19 @@ function initCart() {
         });
     });
 
+    // main "COMPRAR AGORA" buttons
+    document.querySelectorAll('.buy-now-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation(); // prevent triggering the card click
+            const product = parseProductFromCard(btn);
+            if (!product || !product.checkoutUrl) return;
+            
+            // Opcional: Adiciona ao carrinho para registro e vai para o checkout
+            addToCart(product);
+            window.location.href = product.checkoutUrl;
+        });
+    });
+
     // Handle clicks on product cards to go to details page
     document.querySelectorAll('.product-card').forEach(card => {
         card.addEventListener('click', (e) => {

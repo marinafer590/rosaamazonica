@@ -303,20 +303,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Comprar agora → adiciona ao cart e vai direto para checkout
   const handleBuy = () => {
+    const qty = parseInt(qtyInput.value) || 1;
+    
+    // Adiciona ao carrinho primeiro (para registro/pixel)
     if (window.rosaAddToCart) {
-      const qty = parseInt(qtyInput.value) || 1;
       window.rosaAddToCart(product, qty);
-      
-      // Busca o carrinho atualizado para pegar o link do primeiro item
-      const currentCart = JSON.parse(localStorage.getItem('rosaCart') || '[]');
-      if (currentCart.length > 0) {
-        window.location.href = currentCart[0].checkoutUrl || product.checkoutUrl || 'index.html';
-      } else {
-        window.location.href = product.checkoutUrl || 'index.html';
-      }
-    } else {
-      window.location.href = product.checkoutUrl || 'index.html';
     }
+    
+    // Pega o link direto do produto ou do localStorage como garantia
+    const finalCheckoutUrl = product.checkoutUrl || 
+                             JSON.parse(localStorage.getItem('currentRosaProduct') || '{}').checkoutUrl || 
+                             'index.html';
+
+    console.log('Redirecionando para:', finalCheckoutUrl);
+    window.location.href = finalCheckoutUrl;
   };
 
   document.getElementById('prod-add-cart').addEventListener('click', handleAdd);
