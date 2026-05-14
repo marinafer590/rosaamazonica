@@ -170,7 +170,7 @@ function initCart() {
     let cart = JSON.parse(localStorage.getItem('rosaCart') || '[]');
 
     // Expose add to cart globally for product page
-    window.rosaAddToCart = function(product, qty = 1) {
+    window.rosaAddToCart = function(product, qty = 1, openDrawer = true) {
         const existing = cart.find(i => i.id === product.id);
         if (existing) {
             existing.qty += qty;
@@ -178,7 +178,7 @@ function initCart() {
             cart.push({ ...product, qty });
         }
         refreshCart();
-        openCart();
+        if (openDrawer) openCart();
     };
 
     // ── helpers ──────────────────────────────────────────────

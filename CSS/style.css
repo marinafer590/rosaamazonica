@@ -1750,6 +1750,8 @@ button {
 .prod-buy-now-wrap { margin-bottom: 20px; }
 .prod-buy-btn-official { width: 100%; background: #26a69a; color: #fff; border: none; padding: 18px; border-radius: 50px; font-size: 18px; font-weight: 500; cursor: pointer; transition: background 0.3s; }
 .prod-buy-btn-official:hover { background: #219688; }
+.prod-add-cart-btn { width: 100%; background: #fff; color: #26a69a; border: 2px solid #26a69a; padding: 16px; border-radius: 50px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; }
+.prod-add-cart-btn:hover { background: #e0f2f1; }
 .prod-payment-icons-original {
     display: flex;
     justify-content: center;
