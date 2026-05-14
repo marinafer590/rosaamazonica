@@ -207,10 +207,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Meta
   document.title = product.name + ' | Rosa Selvagem Brasil';
-  document.getElementById('breadcrumb-title').textContent = product.name;
+  const bTitle = document.getElementById('breadcrumb-title');
+  if (bTitle) bTitle.textContent = product.name;
 
   // Imagem
-  document.getElementById('prod-img').src = product.image;
+  const mainImg = document.getElementById('prod-img');
+  if (mainImg) mainImg.src = product.image;
 
   // Thumbnails (mesma imagem 3x)
   document.querySelectorAll('.prod-thumb').forEach(t => {
@@ -221,7 +223,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Título
-  document.getElementById('prod-title').textContent = product.name;
+  const pTitle = document.getElementById('prod-title');
+  if (pTitle) pTitle.textContent = product.name;
 
   // Preço original + badge de desconto
   const oldPriceEl = document.getElementById('prod-old-price');
@@ -241,11 +244,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Preço atual
-  document.getElementById('prod-current-price').textContent = fmt(product.price);
+  const curPrice = document.getElementById('prod-current-price');
+  if (curPrice) curPrice.textContent = fmt(product.price);
 
   // Parcelas — 6x sem juros
   const parcela = product.price / 6;
-  document.getElementById('prod-installment').textContent = `ou até 6x de ${fmt(parcela)} sem juros`;
+  const instEl = document.getElementById('prod-installment');
+  if (instEl) instEl.textContent = `ou até 6x de ${fmt(parcela)} sem juros`;
 
   // PIX — 5% de desconto + economia em reais
   const pixVal  = product.price * 0.95;
@@ -325,31 +330,55 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cartItem) checkoutUrl = cartItem.checkoutUrl;
       }
 
-      // Adiciona ao carrinho (para trackear a intenção de compra)
+      // Adiciona ao carrinho (para trackear a intenção de compra) sem abrir o drawer
       if (window.rosaAddToCart) {
-        window.rosaAddToCart(product, qty);
+        window.rosaAddToCart(product, qty, false);
       }
 
       // 4. Fallback final caso nada funcione
       const finalUrl = checkoutUrl || 'index.html';
       
       console.log('Final Checkout Link:', finalUrl);
+      
+      // Tracking event before redirect if possible
+      if (window.utmify && window.utmify.track) {
+        window.utmify.track('InitiateCheckout', {
+          content_name: product.name,
+          content_ids: [product.id],
+          content_type: 'product',
+          value: product.price,
+          currency: 'BRL'
+        });
+      }
+
       window.location.href = finalUrl;
       
     } catch (err) {
       console.error('Erro no redirecionamento:', err);
-      // Fallback seguro em caso de erro crítico
       window.location.href = 'index.html';
     }
   };
 
-  document.getElementById('prod-add-cart').addEventListener('click', handleAdd);
-  document.getElementById('prod-buy-btn').addEventListener('click', handleBuy);
+  const buyBtn = document.getElementById('prod-buy-btn');
+  const addCartBtn = document.getElementById('prod-add-cart');
+  
+  if (buyBtn) {
+    buyBtn.dataset.checkoutUrl = product.checkoutUrl || '';
+    buyBtn.addEventListener('click', handleBuy);
+  }
+  
+  if (addCartBtn) {
+    addCartBtn.addEventListener('click', handleAdd);
+  }
 
   const stickyAdd = document.getElementById('prod-sticky-add-cart');
   const stickyBuy = document.getElementById('prod-sticky-buy-btn');
+  
   if (stickyAdd) stickyAdd.addEventListener('click', handleAdd);
-  if (stickyBuy) stickyBuy.addEventListener('click', handleBuy);
+  if (stickyBuy) {
+    stickyBuy.dataset.checkoutUrl = product.checkoutUrl || '';
+    stickyBuy.addEventListener('click', handleBuy);
+  }
 
   // Sticky bar ao rolar
   const stickyBar = document.querySelector('.prod-sticky-bar');
@@ -368,7 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (secondsLeft > 0) secondsLeft--;
     const m = String(Math.floor(secondsLeft / 60)).padStart(2, '0');
     const s = String(secondsLeft % 60).padStart(2, '0');
-    timerEl.textContent = `${m}:${s}`;
+    if (timerEl) timerEl.textContent = `${m}:${s}`;
   }, 1000);
 
   // Produtos relacionados
